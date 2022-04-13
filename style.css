@@ -51,13 +51,13 @@ h1 {
   border-radius: nullpx;
 }
 
-.filter-div {
+.sort-div {
   width: 100%;
   display: flex;
   justify-content: end;
   margin-top: 16px;
 }
-.filter {
+.sort {
   width: 25px;
   height: 15px;
   text-align: end;
@@ -66,12 +66,15 @@ h1 {
 
 .text-div {
   width: 286px;
+  max-height: 220px;
   margin-top: 11px;
   box-sizing: border-box;
 
   border: 1px solid #c4c4c4;
   box-sizing: border-box;
   border-radius: 10px;
+
+  overflow: hidden auto;
 }
 ul.list {
   display: none;
