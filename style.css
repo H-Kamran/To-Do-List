@@ -87,6 +87,7 @@ ul.list {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 li p {
   display: inline;
@@ -115,7 +116,7 @@ input {
 }
 .delete-input-img:hover,
 .delete-list-img:hover {
-  content: url(/img/delete-filled.svg);
+  content: url(./img/delete-filled.svg);
 }
 
 .button-div {
