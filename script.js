@@ -5,12 +5,12 @@ let ul = document.querySelector(".list");
 let sort = document.querySelector(".sort");
 let liArray;
 
-let dragged;
+let draggedItem;
+let draggedIndex;
 
 let liContent = '';
 
 let valuesArray = JSON.parse(localStorage.getItem('Array'));
-console.log(valuesArray)
 if (valuesArray == null) {
     valuesArray = [];
 } else {
@@ -52,15 +52,17 @@ function setLi() {
     //bonus
     liArray = document.querySelectorAll('.list li');
 
-    liArray.forEach(item => {
+    liArray.forEach((item, index) => {
         item.addEventListener('dragstart', (e) => {
             e.target.style.opacity = 0.5;
-            dragged=e.target;
+            draggedItem = e.target;
+            draggedIndex = index;
         });
         item.addEventListener('dragend', (e) => {
             e.target.style.opacity = 1;
         });
     });
+
 }
 
 sort.addEventListener('mouseover', (e) => {
@@ -110,19 +112,31 @@ ul.addEventListener('drop', (e) => {
     for (let i = 0; i < liArray.length; i++) {
         if (i + 1 != liArray.length) {
             if (e.clientY > liArray[i].getBoundingClientRect().top && e.clientY < liArray[i + 1].getBoundingClientRect().top) {
-                if (dragged.getBoundingClientRect().top < liArray[i].getBoundingClientRect().top) {
-                    ul.insertBefore(dragged, liArray[i + 1]);
-                    liArray = document.querySelectorAll(".list li");
+                if (draggedItem.getBoundingClientRect().top < liArray[i].getBoundingClientRect().top) {
+                    let draggedItemValue;
+                    draggedItemValue = valuesArray[draggedIndex];
+                    for (let j = draggedIndex; j < i; j++) {
+                        valuesArray[j] = valuesArray[j + 1];
+                    }
+                    valuesArray[i] = draggedItemValue;
                 } else {
-                    ul.insertBefore(dragged, liArray[i]);
-                    liArray = document.querySelectorAll(".list li");
+                    let draggedItemValue;
+                    draggedItemValue = valuesArray[draggedIndex];
+                    for (let j = draggedIndex; j > i; j--) {
+                        valuesArray[j] = valuesArray[j - 1];
+                    }
+                    valuesArray[i] = draggedItemValue;
                 }
             }
         }
         else if (e.clientY > liArray[i].getBoundingClientRect().top) {
-            ul.append(dragged);
-            liArray = document.querySelectorAll(".list li");
+            let draggedItemValue;
+            draggedItemValue = valuesArray[draggedIndex];
+            for (let j = draggedIndex; j < i; j++) {
+                valuesArray[j] = valuesArray[j + 1];
+            }
+            valuesArray[i] = draggedItemValue;
         }
     }
-    setArray();
+    setArray(valuesArray);
 });
